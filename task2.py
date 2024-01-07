@@ -16,3 +16,5 @@ while True:
         break
     except ValueError as error:
         print(f"Ошибка {error}! Введите целое число в поле для ввода.")
+    except Exception as error:
+        print(f"Ошибка {error}! Введите число в поле для ввода.")
