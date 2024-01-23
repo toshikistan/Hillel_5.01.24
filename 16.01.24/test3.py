@@ -1,3 +1,4 @@
+import random
 # Завдання 3
 
 # Напишіть функцію, яка визначає кількість простих чисел у списку цілих. Список передається як параметр. Отриманий результат повертається із функції.
@@ -17,7 +18,6 @@
 
 # simple_res = count_simple(nums_list)
 # print(simple_res)
-
 
 
 #  def simple_num(num):
@@ -45,9 +45,9 @@ def count_simple(simple_list):
             count += 1
     return count
 
-num = input("Введите числа: ").lstrip().rstrip()
-nums_list = num.split(' ')
-nums_list = [int(i) for i in nums_list]
+
+nums_list = [random.randint(1, 20) for i in range(10)]
+print(nums_list)
 
 simple_res = count_simple(nums_list)
 print(simple_res)

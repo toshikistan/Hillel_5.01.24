@@ -34,6 +34,8 @@ print("___" * 10)
 Тут я ещё добавил лстрип и рстрип, так как случайно ввел с пробелом и получил ошибку)
 Стоит добавить ещё во всех примерах ещё try Except, возможно добавлю.
 Ну и вывод по стандарту в принципе.
+
+/////// Список переделал, чтобы он рандомно генерировался, а не через инпут.
 '''
 
 
@@ -43,13 +45,10 @@ def list_min(min_list):
     return min_num
 
 
-nums = input(
-    "Через пробел введите числа, минимальное из которых хотите узнать: ").lstrip().rstrip()
-nums_list = nums.split(' ')
-
-nums_list = [int(num) for num in nums_list]
+nums_list = [random.randint(1, 99) for i in range(10)]
+print(nums_list)
 mini_num = list_min(nums_list)
-print(mini_num)
+print(mini_num, "является минимальным числом из списка.")
 print("___" * 10)
 # Завдання 3
 
@@ -64,6 +63,8 @@ print("___" * 10)
 Если выдала фолс, то не добавляем ничего. В конце возвращаем count и получаем нужное значение.
 Работа с инпутом аналогична предыдущим заданиям.
 
+
+/////////// Список переделал, чтобы он рандомно генерировался, а не через инпут.
 '''
 
 
@@ -84,12 +85,11 @@ def count_simple(simple_list):
     return count
 
 
-num = input("Через пробел введите числа для проверки: ").lstrip().rstrip()
-nums_list = num.split(' ')
-nums_list = [int(i) for i in nums_list]
+nums_list = [random.randint(1, 20) for i in range(10)]
+print(nums_list)
 
 simple_res = count_simple(nums_list)
-print(simple_res)
+print("Количество простых чисел в списке равно", simple_res)
 print("___" * 10)
 # Завдання 4
 
@@ -178,8 +178,9 @@ def merge_list(list1, list2):
 
 merge = merge_list(list1, list2)
 same_numbers = show_common(list1, list2)
-print(same_numbers)
-print(merge)
+print("Общеие элементы списков: ", same_numbers)
+print("Элементы из двух списков: ", merge)
+print("___" * 10)
 # Завдання 6
 
 # Напишіть функцію, яка обчислює ступінь кожного елемента списку цілих. Значення для ступеня передається як параметр, список також передається як параметр. Функція повертає новий список, який містить отримані результати.
