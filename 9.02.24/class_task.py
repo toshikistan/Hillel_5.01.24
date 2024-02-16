@@ -1,3 +1,6 @@
+import time
+
+
 class Person:
     __name = "no name"
     __health = "",
@@ -6,18 +9,19 @@ class Person:
     __weapon = "no weapon"
     __armor = "no armor"
 
-    def __init__(self, name, health, damage, defence, weapon="Knuckles", armor=None):
+    def __init__(self, name, health, damage, defence, weapon=None, armor=None):
         self.__name = name
         self.__health = health
         self.__damage = damage
         self.__defence = defence
-        self.__weapon = weapon if weapon else "no weapon"
+        self.__weapon = weapon if weapon else "Knuckles"
         self.__armor = armor if armor else "no armor"
 
     def take_damage(self, damage):
-        self.health -= damage - self.defence
+        total_damage = damage - self.defence - Armor.armors.get(self.armor, 0)
+        self.health -= total_damage
         print(f"{self.name} loses {
-              damage} health points! His health is {self.health} now!")
+              total_damage} health points! His health is {self.health} now!")
 
     @property
     def name(self):
@@ -70,55 +74,100 @@ class Person:
     def armor(self, armor):
         self.__armor = armor
 
+    def show_info(self):
+        print(f"Name: {self.name}, Health: {self.health}, Damage: {self.damage}, Defence: {
+              self.armor}, Weapon: {self.weapon}, Armor: {self.armor}")
+
 
 class Hero(Person):
+    def __init__(self, name, health, damage, defence, weapon=None, armor=None):
+        super().__init__(name, health, damage, defence, weapon, armor)
+        self.__small_potion_used = False
+        self.__big_potion_used = False
 
     def attack(self, enemy):
         print(f"{self.name} attackes with {self.weapon}")
-        enemy.take_damage(self.damage)
+        total_damage = self.damage + Weapon.weapons.get(self.weapon, 0)
+        enemy.take_damage(total_damage)
+
+        if self.health < 60 and not self.__small_potion_used:
+            self.use_potion("Small potion")
+            self.__small_potion_used = True
+
+        if self.health <= 20 and not self.__big_potion_used:
+            self.use_potion("Big potion")
+            self.__big_potion_used = True
+
+    def use_potion(self, potion_name):
+        if potion_name in Potion.potions:
+            heal_amount = Potion.potions[potion_name]
+            self.health += heal_amount
+            print(f"{self.name} used {
+                  potion_name} and got +{heal_amount} health! His health now is {self.health}")
 
 
 class Enemy(Person):
-
     def attack(self, hero):
         print(f"{self.name} attackes with {self.weapon}")
-        hero.take_damage(self.damage)
-
-
-''''''
+        total_damage = self.damage + Weapon.weapons.get(self.weapon, 0)
+        hero.take_damage(total_damage)
 
 
 class Weapon:
-    pass
+    def __init__(self, name, damage):
+        self.name = name
+        self.damage = damage
+
+    weapons = {
+        "Sword": 15,
+        "Axe": 20,
+        "Bow": 10,
+    }
 
 
 class Armor:
-    pass
+    def __init__(self, name, defence):
+        self.name = name
+        self.defene = defence
 
-
-''''''
+    armors = {
+        "Shield": 5,
+        "Helmet": 10,
+        "Corselet": 15,
+    }
 
 
 class Potion:
-    pass
+    def __init__(self, name, heal):
+        self.name = name
+        self.heal = heal
+
+    potions = {
+        "Small potion": 20,
+        "Big potion": 60,
+    }
 
 
-class HealPotion(Potion):
-    pass
-
-
-class BuffPotion(Potion):
-    pass
-
-
-hero = Hero("Arthur", 100, 20, 10)
-enemy = Enemy("Orc", 80, 15, 5)
+hero = Hero("Arthur", 100, 22, 11, "", "Corselet")
+enemy = Enemy("Orc", 80, 20, 5, "Axe", "Helmet")
 
 while hero.health > 0 and enemy.health > 0:
+    time.sleep(1)
     hero.attack(enemy)
     enemy.attack(hero)
 
 if hero.health > 0:
     print(f"{hero.name} победил!")
-else:
+elif enemy.health > 0:
     print(f"{enemy.name} победил!")
+else:
+    print(f"{hero.name} and {enemy.name} died.")
+
+
+hero.show_info()
+enemy.show_info()
+print(hero.name)
+print(enemy.weapon)
+print(hero.health)
+print(enemy.armor)
+print(hero.defence)
