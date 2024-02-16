@@ -157,9 +157,9 @@ while hero.health > 0 and enemy.health > 0:
     enemy.attack(hero)
 
 if hero.health > 0:
-    print(f"{hero.name} победил!")
+    print(f"{hero.name} wins!")
 elif enemy.health > 0:
-    print(f"{enemy.name} победил!")
+    print(f"{enemy.name} wins!")
 else:
     print(f"{hero.name} and {enemy.name} died.")
 
